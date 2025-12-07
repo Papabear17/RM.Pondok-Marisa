@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RM. PONDOK MARISA - Pemesanan</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-title">RM. PONDOK MARISA</span>
+      <span class="brand-subtitle">Sistem Pemesanan Pelanggan</span>
+    </div>
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-target="dashboard-section">Dashboard</button>
+      <button class="tab-btn" data-target="cart-section">Keranjang</button>
+      <button class="tab-btn" data-target="payment-section">Pembayaran</button>
+    </nav>
+    <a href="admin.html" class="admin-link">Panel Admin</a>
+  </header>
+
+  <main class="container">
+    <!-- DASHBOARD MENU -->
+    <section id="dashboard-section" class="tab-section active">
+      <h2>Menu Makanan &amp; Minuman</h2>
+      <p class="section-desc">
+        Pilih menu favorit Anda, lalu tambahkan ke keranjang untuk melakukan pemesanan.
+      </p>
+
+      <div class="filters">
+        <input type="text" id="search-input" placeholder="Cari menu..." />
+        <select id="category-filter">
+          <option value="all">Semua Kategori</option>
+          <option value="makanan">Makanan</option>
+          <option value="minuman">Minuman</option>
+          <option value="lainnya">Lainnya</option>
+        </select>
+      </div>
+
+      <div id="menu-list" class="card-grid">
+        <!-- Kartu menu akan di-render via JS -->
+      </div>
+    </section>
+
+    <!-- KERANJANG PEMESANAN -->
+    <section id="cart-section" class="tab-section">
+      <h2>Keranjang Pemesanan</h2>
+      <p class="section-desc">
+        Cek kembali pesanan Anda sebelum melanjutkan ke pembayaran.
+      </p>
+
+      <div id="cart-empty" class="empty-state">Keranjang masih kosong.</div>
+
+      <table id="cart-table" class="data-table hidden">
+        <thead>
+          <tr>
+            <th>Menu</th>
+            <th>Harga</th>
+            <th>Jumlah</th>
+            <th>Subtotal</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Item keranjang via JS -->
+        </tbody>
+      </table>
+
+      <div id="cart-summary" class="summary-box hidden">
+        <div class="summary-row">
+          <span>Total Item</span>
+          <span id="cart-total-items">0</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total Bayar</span>
+          <span id="cart-total-price">Rp 0</span>
+        </div>
+        <button id="go-to-payment" class="btn primary">Lanjut ke Pembayaran</button>
+      </div>
+    </section>
+
+    <!-- PEMBAYARAN -->
+    <section id="payment-section" class="tab-section">
+      <h2>Pembayaran</h2>
+      <p class="section-desc">
+        Pilih metode pembayaran dan konfirmasi pesanan Anda.
+      </p>
+
+      <div id="payment-warning" class="alert alert-warning hidden">
+        Keranjang masih kosong. Silakan pilih menu terlebih dahulu.
+      </div>
+
+      <div class="payment-layout">
+        <div class="payment-left">
+          <h3>Ringkasan Pesanan</h3>
+          <ul id="payment-items" class="payment-items">
+            <!-- Diisi via JS -->
+          </ul>
+          <div class="summary-box">
+            <div class="summary-row total">
+              <span>Total Bayar</span>
+              <span id="payment-total-price">Rp 0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="payment-right">
+          <h3>Data Pelanggan</h3>
+          <form class="form-card" id="customer-info-form">
+            <label>
+              Nama Pemesan
+              <input type="text" id="customer-name" placeholder="Masukkan nama pemesan" required />
+            </label>
+          </form>
+
+          <h3>Metode Pembayaran</h3>
+          <h3>Metode Pembayaran</h3>
+          <div class="payment-methods">
+            <label class="radio-card">
+              <input type="radio" name="payment-method" value="kasir" checked />
+              <span>Kasir / Tunai</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="payment-method" value="qris" />
+              <span>QRIS</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="payment-method" value="transfer" />
+              <span>Transfer Bank</span>
+            </label>
+          </div>
+
+          <div id="payment-info" class="payment-info">
+            <!-- Info metode pembayaran via JS -->
+          </div>
+
+          <button id="confirm-order" class="btn primary full-width">
+            Konfirmasi Pesanan
+          </button>
+
+          <div id="order-success" class="alert alert-success hidden">
+            Pesanan berhasil dibuat! Nomor pesanan:
+            <span id="order-id"></span>.
+            <button id="print-latest-receipt" class="link-button">
+              Cetak Struk
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> RM. PONDOK MARISA</span>
+    <span>Sistem Pemesanan Sederhana</span>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
+

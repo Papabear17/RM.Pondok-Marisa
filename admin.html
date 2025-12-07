@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - RM. PONDOK MARISA</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="admin-body">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-title">Admin RM. PONDOK MARISA</span>
+      <span class="brand-subtitle">Panel Pengelolaan</span>
+    </div>
+    <nav class="nav-tabs admin-nav">
+      <button class="tab-btn active" data-target="admin-menu-section">Menu</button>
+      <button class="tab-btn" data-target="admin-orders-section">Pesanan</button>
+      <button class="tab-btn" data-target="admin-sales-section">Grafik Penjualan</button>
+      <button class="tab-btn" data-target="admin-receipt-section">Pengaturan Struk</button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <a href="index.html" class="admin-link">Halaman Pelanggan</a>
+      <button id="btn-logout-admin" class="btn small">Logout</button>
+    </div>
+  </header>
+
+  <main class="container" id="admin-main">
+    <!-- LOGIN ADMIN -->
+    <section id="admin-login-section">
+      <h2>Login Admin</h2>
+      <p class="section-desc">
+        Masuk untuk mengelola menu, pesanan, dan laporan penjualan.
+      </p>
+      <form id="admin-login-form" class="form-card">
+        <label>
+          Username
+          <input type="text" id="admin-username" required />
+        </label>
+        <label>
+          Password
+          <input type="password" id="admin-password" required />
+        </label>
+        <button type="submit" class="btn primary full-width">Masuk</button>
+        <div id="admin-login-error" class="alert alert-error hidden"></div>
+      </form>
+    </section>
+
+    <section id="admin-content" class="hidden">
+      <!-- MENU MANAGEMENT -->
+      <section id="admin-menu-section" class="tab-section active">
+        <div class="section-header">
+          <h2>Pengelolaan Menu</h2>
+          <button id="btn-new-menu" class="btn">Tambah Menu Baru</button>
+        </div>
+        <div class="admin-layout">
+          <form id="menu-form" class="form-card">
+            <input type="hidden" id="menu-id" />
+            <h3 id="menu-form-title">Tambah Menu</h3>
+            <label>
+              Nama Menu
+              <input type="text" id="menu-name" required />
+            </label>
+            <label>
+              Kategori
+              <select id="menu-category" required>
+                <option value="makanan">Makanan</option>
+                <option value="minuman">Minuman</option>
+                <option value="lainnya">Lainnya</option>
+              </select>
+            </label>
+            <label>
+              Harga (Rp)
+              <input type="number" id="menu-price" min="0" step="500" required />
+            </label>
+            <label>
+              Deskripsi
+              <textarea id="menu-description" rows="3"></textarea>
+            </label>
+            <label>
+              Gambar Menu
+              <input type="file" id="menu-image" accept="image/*" />
+            </label>
+            <div id="menu-image-preview" class="image-preview hidden">
+              <img src="" alt="Preview gambar menu" />
+              <button type="button" id="btn-remove-menu-image" class="btn danger small" style="margin-top: 0.5rem;">Hapus Gambar</button>
+            </div>
+            <button type="submit" class="btn primary full-width">Simpan Menu</button>
+          </form>
+
+          <div class="table-wrapper">
+            <table class="data-table" id="admin-menu-table">
+              <thead>
+                <tr>
+                  <th>Gambar</th>
+                  <th>Nama</th>
+                  <th>Kategori</th>
+                  <th>Harga</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Data menu via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ORDERS -->
+      <section id="admin-orders-section" class="tab-section">
+        <div class="section-header">
+          <h2>Daftar Pesanan Pelanggan</h2>
+          <button id="btn-export-orders" class="btn small">Export Excel (Pesanan)</button>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="admin-orders-table">
+            <thead>
+              <tr>
+                <th>No Pesanan</th>
+                <th>Nama Pemesan</th>
+                <th>Item Pesanan</th>
+                <th>Tanggal</th>
+                <th>Metode</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Pesanan via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SALES / CHARTS -->
+      <section id="admin-sales-section" class="tab-section">
+        <div class="section-header">
+          <h2>Grafik Penjualan</h2>
+          <button id="btn-export-sales" class="btn small">Export Excel (Penjualan)</button>
+        </div>
+        <div class="sales-filters">
+          <label>
+            Rentang Waktu
+            <select id="sales-range">
+              <option value="daily">Harian</option>
+              <option value="weekly">Mingguan</option>
+              <option value="monthly">Bulanan</option>
+            </select>
+          </label>
+        </div>
+        <div class="chart-card">
+          <canvas id="sales-chart" height="180"></canvas>
+        </div>
+        <div class="table-wrapper">
+          <table class="data-table" id="sales-table">
+            <thead>
+              <tr>
+                <th>Periode</th>
+                <th>Jumlah Transaksi</th>
+                <th>Total Penjualan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Data penjualan via JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RECEIPT / STRUK SETTINGS -->
+      <section id="admin-receipt-section" class="tab-section">
+        <div class="section-header">
+          <h2>Pengaturan Struk</h2>
+        </div>
+        <div class="admin-layout">
+          <div>
+            <form id="receipt-settings-form" class="form-card">
+              <h3>Template Struk</h3>
+              <p class="helper-text">
+                Gunakan placeholder:
+                <code>{{orderId}}</code>,
+                <code>{{date}}</code>,
+                <code>{{customerName}}</code>,
+                <code>{{items}}</code>,
+                <code>{{total}}</code>,
+                <code>{{paymentMethod}}</code>.
+              </p>
+              <textarea id="receipt-template" rows="10"></textarea>
+              <button type="submit" class="btn primary full-width">Simpan Template</button>
+            </form>
+
+            <form id="qris-settings-form" class="form-card">
+              <h3>Gambar QRIS</h3>
+              <p class="helper-text">
+                Upload gambar QRIS yang akan ditampilkan pada halaman pembayaran pelanggan.
+              </p>
+              <label>
+                File Gambar QRIS
+                <input type="file" id="qris-image-input" accept="image/*" />
+              </label>
+              <div id="qris-image-preview" class="image-preview hidden">
+                <img src="" alt="Preview QRIS" />
+              </div>
+              <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <button type="button" id="btn-save-qris" class="btn primary">Simpan QRIS</button>
+                <button type="button" id="btn-clear-qris" class="btn danger">Hapus QRIS</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="receipt-preview">
+            <h3>Preview Struk</h3>
+            <div id="receipt-preview-box" class="receipt-box">
+              <!-- Preview via JS -->
+            </div>
+            <button id="print-sample-receipt" class="btn">Cetak Contoh Struk</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>&copy; <span id="year"></span> RM. PONDOK MARISA</span>
+    <span>Panel Admin</span>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
+
+
